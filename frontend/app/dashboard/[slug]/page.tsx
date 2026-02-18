@@ -5,12 +5,31 @@ import PortfolioDashboard from '../../../components/dashboard/PortfolioDashboard
 import { supabase } from '../../../lib/supabase';
 import { useParams } from 'next/navigation';
 
+// Define explicit types to avoid 'never' inference
+interface ProfileData {
+  id: string;
+  name: string;
+  slug: string;
+  total_assets_display?: string;
+  [key: string]: any;
+}
+
+interface PortfolioItem {
+  ticker: string;
+  portfolio_weight: number;
+  market_value: number;
+  company_name?: string;
+  change_type?: string;
+  [key: string]: any;
+}
+
 export default function DashboardPage() {
   const params = useParams();
   const slug = params.slug as string;
   
-  const [profile, setProfile] = useState<any>(null);
-  const [portfolio, setPortfolio] = useState<any[]>([]); // Explicitly any[]
+  // Use explicit types in useState
+  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [portfolio, setPortfolio] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,7 +45,7 @@ export default function DashboardPage() {
           .single();
 
         if (profileError) throw profileError;
-        setProfile(profileData);
+        setProfile(profileData as ProfileData);
 
         const { data: portfolioData, error: portfolioError } = await supabase
           .from('portfolios')
@@ -35,7 +54,7 @@ export default function DashboardPage() {
           .order('portfolio_weight', { ascending: false });
 
         if (portfolioError) throw portfolioError;
-        setPortfolio(portfolioData || []);
+        setPortfolio((portfolioData as PortfolioItem[]) || []);
 
       } catch (err: any) {
         console.error('Error fetching dashboard data:', err);
