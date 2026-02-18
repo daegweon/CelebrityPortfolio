@@ -9,7 +9,6 @@ import {
   ExternalLink,
   ChevronRight
 } from 'lucide-react';
-
 import { PortfolioHistoryChart, SectorDistributionChart } from './Charts';
 
 const PortfolioDashboard = ({ profile, holdings = [] }) => {
@@ -29,19 +28,13 @@ const PortfolioDashboard = ({ profile, holdings = [] }) => {
     { name: "Health", value: 8 },
     { name: "Others", value: 6 },
   ];
+
+  // Use real data or fallback to mock
   const stats = [
     { label: "Total Value", value: profile?.total_assets_display || "$0", change: "+12.4%", upward: true, icon: <DollarSign size={20} /> },
     { label: "Quarterly Return", value: "+8.2%", change: "vs S&P 500 (+3.1%)", upward: true, icon: <TrendingUp size={20} /> },
     { label: "Top Holding", value: holdings[0] ? `${holdings[0].ticker} (${holdings[0].portfolio_weight}%)` : "N/A", change: "Unchanged", upward: null, icon: <PieChart size={20} /> },
     { label: "Holdings Count", value: `${holdings.length} Stocks`, change: "Total diversity", upward: true, icon: <Activity size={20} /> },
-  ];
-
-  const holdings = [
-    { ticker: "NVDA", name: "NVIDIA Corp", weight: "24.2%", value: "$30.1M", change: "+15.4%", status: "BUY" },
-    { ticker: "AAPL", name: "Apple Inc", weight: "18.5%", value: "$23.0M", change: "-2.1%", status: "HOLD" },
-    { ticker: "MSFT", name: "Microsoft Corp", weight: "12.1%", value: "$15.1M", change: "+4.2%", status: "HOLD" },
-    { ticker: "AMZN", name: "Amazon.com", weight: "9.8%", value: "$12.2M", change: "+0.8%", status: "BUY" },
-    { ticker: "PANW", name: "Palo Alto Networks", weight: "7.4%", value: "$9.2M", change: "+11.2%", status: "NEW" },
   ];
 
   return (
@@ -54,14 +47,14 @@ const PortfolioDashboard = ({ profile, holdings = [] }) => {
             <ChevronRight size={14} />
             <a href="/dashboard" className="hover:text-slate-300">Dashboard</a>
             <ChevronRight size={14} />
-            <span className="text-blue-400 font-medium">{profile.name}</span>
+            <span className="text-blue-400 font-medium">{profile?.name || 'Loading...'}</span>
           </nav>
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-2xl font-bold shadow-lg shadow-blue-500/20">
-              {profile.name.charAt(0)}
+              {profile?.name?.charAt(0) || '?'}
             </div>
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{profile.name} Portfolio</h1>
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{profile?.name} Portfolio</h1>
               <p className="text-slate-400 mt-1 flex items-center gap-2">
                 <Calendar size={14} />
                 Last updated: Feb 18, 2026 • Source: SEC 13F-HR & Capitol Trades
@@ -112,53 +105,52 @@ const PortfolioDashboard = ({ profile, holdings = [] }) => {
 
           {/* Holdings Table */}
           <div className="bg-slate-900/40 border border-slate-800/50 rounded-3xl overflow-hidden backdrop-blur-sm">
-          <div className="p-6 border-b border-slate-800/50 flex items-center justify-between">
-            <h3 className="font-bold text-lg">Top Holdings</h3>
-            <button className="text-blue-400 text-sm font-medium hover:underline">View All 42 Stocks</button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="text-slate-500 text-xs uppercase tracking-wider border-b border-slate-800/50">
-                  <th className="px-6 py-4 font-semibold">Ticker</th>
-                  <th className="px-6 py-4 font-semibold">Weight</th>
-                  <th className="px-6 py-4 font-semibold">Value</th>
-                  <th className="px-6 py-4 font-semibold text-right">Performance (3M)</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800/50">
-                {holdings.map((stock, i) => (
-                  <tr key={i} className="hover:bg-slate-800/20 transition-colors group">
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300 group-hover:text-blue-400 transition-colors">
-                          {stock.ticker}
-                        </div>
-                        <div>
-                          <div className="font-bold text-sm">{stock.ticker}</div>
-                          <div className="text-xs text-slate-500">{stock.name}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <div className="w-24 h-1.5 bg-slate-800 rounded-full mb-1">
-                        <div className="h-full bg-blue-500 rounded-full" style={{ width: stock.weight }}></div>
-                      </div>
-                      <span className="text-sm font-medium text-slate-300">{stock.weight}</span>
-                    </td>
-                    <td className="px-6 py-5 text-sm font-semibold">{stock.value}</td>
-                    <td className="px-6 py-5 text-right">
-                      <div className={`font-bold ${stock.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>
-                        {stock.change}
-                      </div>
-                      <div className="text-[10px] text-slate-500 uppercase tracking-tighter">
-                        Status: <span className={stock.status === 'BUY' || stock.status === 'NEW' ? 'text-blue-400' : 'text-slate-400'}>{stock.status}</span>
-                      </div>
-                    </td>
+            <div className="p-6 border-b border-slate-800/50 flex items-center justify-between">
+              <h3 className="font-bold text-lg">Top Holdings</h3>
+              <button className="text-blue-400 text-sm font-medium hover:underline">View All {holdings.length} Stocks</button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="text-slate-500 text-xs uppercase tracking-wider border-b border-slate-800/50">
+                    <th className="px-6 py-4 font-semibold">Ticker</th>
+                    <th className="px-6 py-4 font-semibold">Weight</th>
+                    <th className="px-6 py-4 font-semibold">Value</th>
+                    <th className="px-6 py-4 font-semibold text-right">Performance (3M)</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-800/50">
+                  {holdings.map((stock, i) => (
+                    <tr key={i} className="hover:bg-slate-800/20 transition-colors group">
+                      <td className="px-6 py-5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300 group-hover:text-blue-400 transition-colors">
+                            {stock.ticker}
+                          </div>
+                          <div>
+                            <div className="font-bold text-sm">{stock.ticker}</div>
+                            <div className="text-xs text-slate-500">{stock.company_name}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-5">
+                        <div className="w-24 h-1.5 bg-slate-800 rounded-full mb-1">
+                          <div className="h-full bg-blue-500 rounded-full" style={{ width: `${stock.portfolio_weight}%` }}></div>
+                        </div>
+                        <span className="text-sm font-medium text-slate-300">{stock.portfolio_weight}%</span>
+                      </td>
+                      <td className="px-6 py-5 text-sm font-semibold">${stock.market_value.toLocaleString()}</td>
+                      <td className="px-6 py-5 text-right">
+                        <div className="font-bold text-green-400">+1.2%</div>
+                        <div className="text-[10px] text-slate-500 uppercase tracking-tighter">
+                          Status: <span className={stock.change_type === 'BUY' ? 'text-blue-400' : 'text-slate-400'}>{stock.change_type}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
