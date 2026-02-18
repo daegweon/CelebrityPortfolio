@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUpRight, TrendingUp, Shield, BarChart3, Users, Zap } from 'lucide-react';
+import { AuthStatus } from './AuthStatus';
 
 const LandingPage = () => {
   return (
@@ -18,9 +19,7 @@ const LandingPage = () => {
             <a href="#legends" className="hover:text-white transition-colors">Legends</a>
             <a href="#data" className="hover:text-white transition-colors">Data Engine</a>
           </div>
-          <button className="bg-white text-slate-950 px-5 py-2 rounded-full text-sm font-bold hover:bg-slate-200 transition-all active:scale-95">
-            Get Access
-          </button>
+          <AuthStatus />
         </div>
       </nav>
 
