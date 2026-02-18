@@ -10,7 +10,7 @@ export default function DashboardPage() {
   const slug = params.slug as string;
   
   const [profile, setProfile] = useState<any>(null);
-  const [portfolio, setPortfolio] = useState<any[]>([]);
+  const [portfolio, setPortfolio] = useState<any[]>([]); // Explicitly any[]
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

@@ -11,7 +11,12 @@ import {
 } from 'lucide-react';
 import { PortfolioHistoryChart, SectorDistributionChart } from './Charts';
 
-const PortfolioDashboard = ({ profile, holdings = [] }) => {
+interface PortfolioDashboardProps {
+  profile: any;
+  holdings?: any[];
+}
+
+const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({ profile, holdings = [] }) => {
   // Mock history data for chart
   const historyData = [
     { date: '2025-Q1', value: 92 },
@@ -139,7 +144,7 @@ const PortfolioDashboard = ({ profile, holdings = [] }) => {
                         </div>
                         <span className="text-sm font-medium text-slate-300">{stock.portfolio_weight}%</span>
                       </td>
-                      <td className="px-6 py-5 text-sm font-semibold">${stock.market_value.toLocaleString()}</td>
+                      <td className="px-6 py-5 text-sm font-semibold">${stock.market_value?.toLocaleString()}</td>
                       <td className="px-6 py-5 text-right">
                         <div className="font-bold text-green-400">+1.2%</div>
                         <div className="text-[10px] text-slate-500 uppercase tracking-tighter">
