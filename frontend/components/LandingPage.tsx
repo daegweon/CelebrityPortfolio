@@ -2,6 +2,31 @@ import React from 'react';
 import { ArrowUpRight, TrendingUp, Shield, BarChart3, Users, Zap } from 'lucide-react';
 import { AuthStatus } from './AuthStatus';
 
+interface Feature {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}
+
+const FEATURES: Feature[] = [
+  { icon: <Zap className="text-yellow-400" />, title: "Instant Alerts", desc: "13F 공시가 올라오는 즉시 푸시 알림을 통해 가장 먼저 변화를 감지합니다." },
+  { icon: <TrendingUp className="text-green-400" />, title: "Alpha Analysis", desc: "S&P 500 대비 해당 투자자의 초과 수익률(Alpha)을 실시간으로 계산합니다." },
+  { icon: <Shield className="text-blue-400" />, title: "SEC Verified", desc: "모든 데이터는 SEC EDGAR 원본 공시와 Capitol Trades 데이터셋을 기반으로 합니다." },
+  { icon: <Users className="text-purple-400" />, title: "Group Insights", desc: "특정 섹터나 인물 그룹별로 집계된 매매 트렌드를 한눈에 파악합니다." },
+  { icon: <BarChart3 className="text-rose-400" />, title: "Deep Visuals", desc: "복잡한 비중 변화를 히트맵과 인터랙티브 차트로 시각화하여 제공합니다." },
+  { icon: <ArrowUpRight className="text-cyan-400" />, title: "Smart Mockup", desc: "그들의 포트폴리오를 그대로 복제했을 때의 예상 성과를 시뮬레이션합니다." },
+];
+
+const FeatureCard = ({ feature }: { feature: Feature }) => (
+  <div className="bg-slate-900/30 border border-slate-800/50 p-8 rounded-2xl hover:border-slate-700 transition-colors group">
+    <div className="mb-6 bg-slate-800/50 w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-slate-800 transition-colors italic">
+      {feature.icon}
+    </div>
+    <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+    <p className="text-slate-500 leading-relaxed text-sm md:text-base">{feature.desc}</p>
+  </div>
+);
+
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-500/30">
@@ -80,48 +105,9 @@ const LandingPage = () => {
           <p className="text-slate-500 max-w-xl mx-auto text-lg">단순한 공시 정보를 넘어, 인텔리전스 데이터를 제공합니다.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-slate-900/30 border border-slate-800/50 p-8 rounded-2xl hover:border-slate-700 transition-colors group">
-            <div className="mb-6 bg-slate-800/50 w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-slate-800 transition-colors italic">
-              <Zap className="text-yellow-400" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Instant Alerts</h3>
-            <p className="text-slate-500 leading-relaxed text-sm md:text-base">13F 공시가 올라오는 즉시 푸시 알림을 통해 가장 먼저 변화를 감지합니다.</p>
-          </div>
-          <div className="bg-slate-900/30 border border-slate-800/50 p-8 rounded-2xl hover:border-slate-700 transition-colors group">
-            <div className="mb-6 bg-slate-800/50 w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-slate-800 transition-colors italic">
-              <TrendingUp className="text-green-400" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Alpha Analysis</h3>
-            <p className="text-slate-500 leading-relaxed text-sm md:text-base">S&P 500 대비 해당 투자자의 초과 수익률(Alpha)을 실시간으로 계산합니다.</p>
-          </div>
-          <div className="bg-slate-900/30 border border-slate-800/50 p-8 rounded-2xl hover:border-slate-700 transition-colors group">
-            <div className="mb-6 bg-slate-800/50 w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-slate-800 transition-colors italic">
-              <Shield className="text-blue-400" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">SEC Verified</h3>
-            <p className="text-slate-500 leading-relaxed text-sm md:text-base">모든 데이터는 SEC EDGAR 원본 공시와 Capitol Trades 데이터셋을 기반으로 합니다.</p>
-          </div>
-          <div className="bg-slate-900/30 border border-slate-800/50 p-8 rounded-2xl hover:border-slate-700 transition-colors group">
-            <div className="mb-6 bg-slate-800/50 w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-slate-800 transition-colors italic">
-              <Users className="text-purple-400" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Group Insights</h3>
-            <p className="text-slate-500 leading-relaxed text-sm md:text-base">특정 섹터나 인물 그룹별로 집계된 매매 트렌드를 한눈에 파악합니다.</p>
-          </div>
-          <div className="bg-slate-900/30 border border-slate-800/50 p-8 rounded-2xl hover:border-slate-700 transition-colors group">
-            <div className="mb-6 bg-slate-800/50 w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-slate-800 transition-colors italic">
-              <BarChart3 className="text-rose-400" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Deep Visuals</h3>
-            <p className="text-slate-500 leading-relaxed text-sm md:text-base">복잡한 비중 변화를 히트맵과 인터랙티브 차트로 시각화하여 제공합니다.</p>
-          </div>
-          <div className="bg-slate-900/30 border border-slate-800/50 p-8 rounded-2xl hover:border-slate-700 transition-colors group">
-            <div className="mb-6 bg-slate-800/50 w-12 h-12 flex items-center justify-center rounded-xl group-hover:bg-slate-800 transition-colors italic">
-              <ArrowUpRight className="text-cyan-400" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Smart Mockup</h3>
-            <p className="text-slate-500 leading-relaxed text-sm md:text-base">그들의 포트폴리오를 그대로 복제했을 때의 예상 성과를 시뮬레이션합니다.</p>
-          </div>
+          {FEATURES.map((feature, idx) => (
+            <FeatureCard key={idx} feature={feature} />
+          ))}
         </div>
       </section>
 
