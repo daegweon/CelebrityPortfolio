@@ -10,8 +10,25 @@ import {
   ChevronRight
 } from 'lucide-react';
 
+import { PortfolioHistoryChart, SectorDistributionChart } from './Charts';
+
 const PortfolioDashboard = ({ profile, holdings = [] }) => {
-  // Use real data or fallback to mock
+  // Mock history data for chart
+  const historyData = [
+    { date: '2025-Q1', value: 92 },
+    { date: '2025-Q2', value: 105 },
+    { date: '2025-Q3', value: 98 },
+    { date: '2025-Q4', value: 115 },
+    { date: '2026-Q1', value: 124.5 },
+  ];
+
+  const sectorData = [
+    { name: "Tech", value: 64 },
+    { name: "Comm", value: 12 },
+    { name: "Fin", value: 10 },
+    { name: "Health", value: 8 },
+    { name: "Others", value: 6 },
+  ];
   const stats = [
     { label: "Total Value", value: profile?.total_assets_display || "$0", change: "+12.4%", upward: true, icon: <DollarSign size={20} /> },
     { label: "Quarterly Return", value: "+8.2%", change: "vs S&P 500 (+3.1%)", upward: true, icon: <TrendingUp size={20} /> },
@@ -84,8 +101,17 @@ const PortfolioDashboard = ({ profile, holdings = [] }) => {
 
       {/* Main Content Area */}
       <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Holdings Table */}
-        <div className="lg:col-span-2 bg-slate-900/40 border border-slate-800/50 rounded-3xl overflow-hidden backdrop-blur-sm">
+        <div className="lg:col-span-2 flex flex-col gap-8">
+          {/* Portfolio History Chart */}
+          <div className="bg-slate-900/40 border border-slate-800/50 p-6 rounded-3xl backdrop-blur-sm">
+            <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
+              <Activity size={18} className="text-blue-400" /> Portfolio Performance History
+            </h3>
+            <PortfolioHistoryChart data={historyData} />
+          </div>
+
+          {/* Holdings Table */}
+          <div className="bg-slate-900/40 border border-slate-800/50 rounded-3xl overflow-hidden backdrop-blur-sm">
           <div className="p-6 border-b border-slate-800/50 flex items-center justify-between">
             <h3 className="font-bold text-lg">Top Holdings</h3>
             <button className="text-blue-400 text-sm font-medium hover:underline">View All 42 Stocks</button>
@@ -138,30 +164,12 @@ const PortfolioDashboard = ({ profile, holdings = [] }) => {
 
         {/* Sidebar / Insights */}
         <div className="flex flex-col gap-6">
-          {/* Sector Allocation Mockup */}
+          {/* Sector Allocation */}
           <div className="bg-slate-900/40 border border-slate-800/50 p-6 rounded-3xl backdrop-blur-sm">
             <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
               <PieChart size={18} className="text-blue-400" /> Sector Allocation
             </h3>
-            <div className="space-y-4">
-              {[
-                { label: "Technology", weight: 64, color: "bg-blue-500" },
-                { label: "Communication", weight: 12, color: "bg-indigo-500" },
-                { label: "Financials", weight: 10, color: "bg-emerald-500" },
-                { label: "Healthcare", weight: 8, color: "bg-rose-500" },
-                { label: "Others", weight: 6, color: "bg-slate-600" },
-              ].map((sector, i) => (
-                <div key={i}>
-                  <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className="text-slate-300 font-medium">{sector.label}</span>
-                    <span className="text-slate-500">{sector.weight}%</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-slate-800 rounded-full">
-                    <div className={`h-full ${sector.color} rounded-full`} style={{ width: `${sector.weight}%` }}></div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <SectorDistributionChart data={sectorData} />
           </div>
 
           {/* Strategy Insight */}
