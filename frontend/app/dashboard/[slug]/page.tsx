@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import PortfolioDashboard from '@/components/dashboard/PortfolioDashboard';
-import { supabase } from '@/lib/supabase';
+import PortfolioDashboard from '../../../components/dashboard/PortfolioDashboard';
+import { supabase } from '../../../lib/supabase';
 import { useParams } from 'next/navigation';
 
 export default function DashboardPage() {
@@ -19,7 +19,6 @@ export default function DashboardPage() {
       try {
         setLoading(true);
         
-        // 1. Fetch Profile by slug
         const { data: profileData, error: profileError } = await supabase
           .from('profiles')
           .select('*')
@@ -29,7 +28,6 @@ export default function DashboardPage() {
         if (profileError) throw profileError;
         setProfile(profileData);
 
-        // 2. Fetch Portfolio for this profile
         const { data: portfolioData, error: portfolioError } = await supabase
           .from('portfolios')
           .select('*')
