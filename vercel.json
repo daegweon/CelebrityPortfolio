@@ -1,11 +1,8 @@
 {
   "name": "celebrity-portfolio",
   "framework": "nextjs",
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "regions": ["icn1"],
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "buildCommand": "npm run build --prefix frontend",
+  "outputDirectory": "frontend/.next",
   "env": {
     "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key"
