@@ -10,13 +10,13 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-const PortfolioDashboard = ({ profile = { name: "Nancy Pelosi", slug: "nancy-pelosi" } }) => {
-  // Mock Data for the Dashboard
+const PortfolioDashboard = ({ profile, holdings = [] }) => {
+  // Use real data or fallback to mock
   const stats = [
-    { label: "Total Value", value: "$124.5M", change: "+12.4%", upward: true, icon: <DollarSign size={20} /> },
+    { label: "Total Value", value: profile?.total_assets_display || "$0", change: "+12.4%", upward: true, icon: <DollarSign size={20} /> },
     { label: "Quarterly Return", value: "+8.2%", change: "vs S&P 500 (+3.1%)", upward: true, icon: <TrendingUp size={20} /> },
-    { label: "Top Holding", value: "NVDA (24%)", change: "Unchanged", upward: null, icon: <PieChart size={20} /> },
-    { label: "Recent Activity", value: "3 Buys", change: "Past 30 days", upward: true, icon: <Activity size={20} /> },
+    { label: "Top Holding", value: holdings[0] ? `${holdings[0].ticker} (${holdings[0].portfolio_weight}%)` : "N/A", change: "Unchanged", upward: null, icon: <PieChart size={20} /> },
+    { label: "Holdings Count", value: `${holdings.length} Stocks`, change: "Total diversity", upward: true, icon: <Activity size={20} /> },
   ];
 
   const holdings = [
