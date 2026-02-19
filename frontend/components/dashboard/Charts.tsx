@@ -16,7 +16,7 @@ import {
 /**
  * 포트폴리오의 역사적 가치 변동을 보여주는 영역 차트 컴포넌트
  */
-export const PortfolioHistoryChart = ({ data }) => {
+export const PortfolioHistoryChart = ({ data }: { data: any[] }) => {
   return (
     <div className="h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">
@@ -61,7 +61,7 @@ export const PortfolioHistoryChart = ({ data }) => {
 /**
  * 섹터별 비중을 시각화하는 가로 바 차트 컴포넌트
  */
-export const SectorDistributionChart = ({ data }) => {
+export const SectorDistributionChart = ({ data }: { data: any[] }) => {
   const COLORS = ['#3b82f6', '#6366f1', '#10b981', '#f43f5e', '#f59e0b', '#64748b'];
 
   return (
